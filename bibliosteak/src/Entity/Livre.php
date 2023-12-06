@@ -7,11 +7,18 @@ use App\Repository\LivreRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Metadata\Get;
 
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
 #[ApiResource(
     normalizationContext: ['groups' => ['read:collection']], 
-    itemOperations: ['get']
+    //A supprimer si on veut voir tous les livres pour l'instant, Grafikar.fr Découverte d'API Platform : La sérialisation -> 6.18
+    // On essaie d'afficher que titre auteur et note pour tous les livres mais quand précision d'un lvre on affiche plus comme description
+    operations: [
+        new Get(
+            normalizationContext: ['groups' => ['read:collection', 'read:item']], 
+        )
+    ]
 )]
 class Livre
 {
@@ -25,6 +32,7 @@ class Livre
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
+    #[Groups(['read:item'])]
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
