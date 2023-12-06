@@ -43,6 +43,12 @@ class Livre
     #[ORM\Column]
     private ?float $prix = null;
 
+    #[ORM\ManyToOne(inversedBy: 'livres')]
+    private ?culture $culture = null;
+
+    #[ORM\ManyToOne(inversedBy: 'livres')]
+    private ?regime $regime = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -152,6 +158,30 @@ class Livre
     public function setPrix(float $prix): static
     {
         $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getCulture(): ?culture
+    {
+        return $this->culture;
+    }
+
+    public function setCulture(?culture $culture): static
+    {
+        $this->culture = $culture;
+
+        return $this;
+    }
+
+    public function getRegime(): ?regime
+    {
+        return $this->regime;
+    }
+
+    public function setRegime(?regime $regime): static
+    {
+        $this->regime = $regime;
 
         return $this;
     }
