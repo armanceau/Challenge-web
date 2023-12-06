@@ -8,17 +8,29 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 
+// #[ApiResource(operations: [
+//     new Get(
+//         uriTemplate: '/cultures/nom/{nom}', 
+//         defaults: ['color' => 'brown'], 
+//         options: ['my_option' => 'my_option_value'], 
+//         schemes: ['https'], 
+//         host: '{subdomain}.api-platform.com'
+//     ),
+//     // new Post(
+//     //     uriTemplate: '/cultures', 
+//     //     status: 301
+//     // ),
+//     new Get(
+//         uriTemplate: '/cultures', 
+//         status: 200
+//     )
+// ])]
+
+#[ApiResource]
 #[ApiResource(operations: [
     new Get(
-        uriTemplate: '/api/cultures/nom/{nom}', 
-        defaults: ['color' => 'brown'], 
-        options: ['my_option' => 'my_option_value'], 
-        schemes: ['https'], 
-        host: '{subdomain}.api-platform.com'
-    ),
-    new Post(
-        uriTemplate: '/grimoire', 
-        status: 301
+        uriTemplate: '/cultures/nom{nom}', 
+        status: 200
     )
 ])]
 
