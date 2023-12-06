@@ -6,16 +6,22 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\LivreRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['read:collection']], 
+    itemOperations: ['get']
+)]
 class Livre
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read:collection'])]
     private ?int $id = null;
 
+    #[Groups(['read:collection'])]
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
@@ -25,12 +31,14 @@ class Livre
     #[ORM\Column(length: 255)]
     private ?string $ISBN = null;
 
+    #[Groups(['read:collection'])]
     #[ORM\Column(length: 255)]
     private ?string $auteur = null;
 
     #[ORM\Column(length: 255)]
     private ?string $editeur = null;
 
+    #[Groups(['read:collection'])]
     #[ORM\Column(nullable: true)]
     private ?int $note = null;
 
