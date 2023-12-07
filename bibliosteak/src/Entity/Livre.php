@@ -14,11 +14,11 @@ use ApiPlatform\Metadata\Get;
     normalizationContext: ['groups' => ['read:collection']], 
     //A supprimer si on veut voir tous les livres pour l'instant, Grafikar.fr Découverte d'API Platform : La sérialisation -> 6.18
     // On essaie d'afficher que titre auteur et note pour tous les livres mais quand précision d'un lvre on affiche plus comme description
-    operations: [
-        new Get(
-            normalizationContext: ['groups' => ['read:collection', 'read:item']], 
-        )
-    ]
+    // operations: [
+    //     new Get(
+    //         normalizationContext: ['groups' => ['read:collection', 'read:item']], 
+    //     )
+    // ]
 )]
 class Livre
 {
