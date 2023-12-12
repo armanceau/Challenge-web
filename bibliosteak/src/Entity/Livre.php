@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
 
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
 #[ApiResource(
@@ -17,7 +18,8 @@ use ApiPlatform\Metadata\GetCollection;
         //Affiche les livres sans détail (id, auteur, nom, note)
         new GetCollection(normalizationContext: ['groups' => ['read:collection']]),
         //Affiche les détails du livre lorsque le livre est sélectionné
-        new Get(normalizationContext: ['groups' => ['read:collection', 'read:item']])
+        new Get(normalizationContext: ['groups' => ['read:collection', 'read:item', 'read:Culture', 'read:Regime']]), 
+        new Post()
     ]
 )]
 class Livre
@@ -55,20 +57,22 @@ class Livre
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
+    
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['read:item'])]
     private ?\DateTimeInterface $date = null;
 
     #[Groups(['read:item'])]
     #[ORM\Column]
     private ?float $prix = null;
 
-    //#[Groups(['read:item'])]
     #[ORM\ManyToOne(inversedBy: 'livres')]
-    private ?culture $culture = null;
+    #[Groups(['read:item'])]
+    private ?Culture $culture = null;
 
-    //#[Groups(['read:item'])]
     #[ORM\ManyToOne(inversedBy: 'livres')]
-    private ?regime $regime = null;
+    #[Groups(['read:item'])]
+    private ?Regime $regime = null;
 
     public function getId(): ?int
     {
