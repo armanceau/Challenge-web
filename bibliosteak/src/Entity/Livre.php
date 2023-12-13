@@ -10,6 +10,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Delete;
 
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
 #[ApiResource(
@@ -19,7 +21,9 @@ use ApiPlatform\Metadata\Post;
         new GetCollection(normalizationContext: ['groups' => ['read:collection']]),
         //Affiche les détails du livre lorsque le livre est sélectionné
         new Get(normalizationContext: ['groups' => ['read:collection', 'read:item', 'read:Culture', 'read:Regime']]), 
-        new Post()
+        new Post(), 
+        new Put(denormalizationContext:['groups' => ['put:Livre']]), 
+        new Delete()
     ]
 )]
 class Livre
@@ -30,7 +34,7 @@ class Livre
     #[Groups(['read:collection'])]
     private ?int $id = null;
 
-    #[Groups(['read:collection'])]
+    #[Groups(['read:collection', 'put:Livre'])]
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
