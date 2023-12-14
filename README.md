@@ -31,7 +31,7 @@
 </details>
 
 <details open>
-  <summary>L'utilisateur peut modifier :</summary>
+  <summary>Modification d'un livre, l'utilisateur peut modifier :</summary>
     <ul>
       <li>Nom</li>
       <li>Description</li>
