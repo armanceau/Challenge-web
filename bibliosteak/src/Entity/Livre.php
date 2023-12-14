@@ -12,17 +12,20 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Delete;
+use Symfony\Component\Validator\Constraints\Length;
 
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
 #[ApiResource(
     description: "Un ensemble de rêve culinaire",
+    //Lors de la modification on choisi de modifier uniquement le nom et la culture on empêche la modification des autres champs
+    denormalizationContext: ['groups' => ['write:Livre']],
     operations: [
         //Affiche les livres sans détail (id, auteur, nom, note)
         new GetCollection(normalizationContext: ['groups' => ['read:collection']]),
         //Affiche les détails du livre lorsque le livre est sélectionné
         new Get(normalizationContext: ['groups' => ['read:collection', 'read:item', 'read:Culture', 'read:Regime']]), 
         new Post(), 
-        new Put(denormalizationContext:['groups' => ['put:Livre']]), 
+        new Put(), 
         new Delete()
     ]
 )]
@@ -34,11 +37,17 @@ class Livre
     #[Groups(['read:collection'])]
     private ?int $id = null;
 
-    #[Groups(['read:collection', 'put:Livre'])]
+    #[
+        Groups(['read:collection', 'write:Livre']), 
+        Length(min:5)
+    ]
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[Groups(['read:item'])]
+    #[
+        Groups(['read:item', 'write:Livre']),   
+        Length(min:10)
+    ]
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
@@ -54,7 +63,7 @@ class Livre
     #[ORM\Column(length: 255)]
     private ?string $editeur = null;
 
-    #[Groups(['read:collection'])]
+    #[Groups(['read:collection', 'write:Livre'])]
     #[ORM\Column(nullable: true)]
     private ?int $note = null;
 
@@ -71,11 +80,11 @@ class Livre
     private ?float $prix = null;
 
     #[ORM\ManyToOne(inversedBy: 'livres')]
-    #[Groups(['read:item'])]
+    #[Groups(['read:item', 'write:Livre'])]
     private ?Culture $culture = null;
 
     #[ORM\ManyToOne(inversedBy: 'livres')]
-    #[Groups(['read:item'])]
+    #[Groups(['read:item', 'write:Livre'])]
     private ?Regime $regime = null;
 
     public function getId(): ?int
