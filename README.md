@@ -40,6 +40,3 @@
       <li>Régime</li>
     </ul>
 </details>
-
-    - Culture 
-    - Régime
