@@ -17,15 +17,15 @@ use Symfony\Component\Validator\Constraints\Length;
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
 #[ApiResource(
     description: "Un ensemble de rêve culinaire",
-    //Lors de la modification on choisi de modifier uniquement le nom et la culture on empêche la modification des autres champs
-    denormalizationContext: ['groups' => ['write:Livre']],
+    
     operations: [
         //Affiche les livres sans détail (id, auteur, nom, note)
         new GetCollection(normalizationContext: ['groups' => ['read:collection']]),
         //Affiche les détails du livre lorsque le livre est sélectionné
         new Get(normalizationContext: ['groups' => ['read:collection', 'read:item', 'read:Culture', 'read:Regime']]), 
         new Post(), 
-        new Put(), 
+        //Lors de la modification on choisi de modifier uniquement le nom et la culture on empêche la modification des autres champs
+        new Put(denormalizationContext: ['groups' => ['write:Livre']]), 
         new Delete()
     ]
 )]
@@ -51,7 +51,11 @@ class Livre
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[Groups(['read:item'])]
+    #[
+        Groups(['read:item']), 
+        //On oblige l'utilisateur à rentrer 10 carac
+        Length(min:10, max:10)
+    ]
     #[ORM\Column(length: 255)]
     private ?string $ISBN = null;
 
