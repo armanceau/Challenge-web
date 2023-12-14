@@ -14,10 +14,10 @@
   <summary>Modification d'un livre, l'utilisateur ne peux pas modifier certains champs : </summary>
     <ul>
      <li>Identifiant</li>
-    - ISBN
-    - Editeur
-    - Auteur
-    - Date
+    <li>ISBN</li>
+    <li>Editeur</li>
+    <li>Auteur</li> 
+    <li>Date</li> 
 </details>
 
 - L'utilisateur peut modifier : 
