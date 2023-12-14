@@ -12,7 +12,8 @@
 
 <details open>
   <summary>Modification d'un livre, l'utilisateur ne peux pas modifier certains champs : </summary>
-    - Identifiant
+    <ul>
+     <li>Identifiant</li>
     - ISBN
     - Editeur
     - Auteur
