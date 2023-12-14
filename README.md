@@ -2,7 +2,7 @@
 
 ## Fonctionnalités 
 
-<details open>
+<details close>
   <summary>Affichage de la collection de livre, champs affichés :</summary>
     <ul>
      <li>Identifiant</li>
@@ -12,14 +12,14 @@
     </ul>
 </details>
 
-<details open>
+<details close>
   <summary>Affichage d'un livre en particulier :</summary>
     <ul>
       <li>Tous les champs sont affichés</li>
     </ul>
 </details>
 
-<details open>
+<details close>
     <summary>Modification d'un livre, l'utilisateur ne peux pas modifier certains champs : </summary>
         <ul>
             <li>Identifiant</li>
@@ -30,7 +30,7 @@
         </ul>
 </details>
 
-<details open>
+<details close>
   <summary>Modification d'un livre, l'utilisateur peut modifier :</summary>
     <ul>
       <li>Nom</li>
