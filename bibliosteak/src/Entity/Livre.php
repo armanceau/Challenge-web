@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\LivreRepository;
 use Doctrine\DBAL\Types\Types;
@@ -17,7 +19,8 @@ use Symfony\Component\Validator\Constraints\Length;
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
 #[ApiResource(
     description: "Un ensemble de rêve culinaire",
-    
+    //On définit le nombre d'élément par page à 2 : (possible de voir le nombre total d'items via la ligne --> "hydra:totalItems": ... )
+    paginationItemsPerPage:2,
     operations: [
         //Affiche les livres sans détail (id, auteur, nom, note)
         new GetCollection(normalizationContext: ['groups' => ['read:collection']]),
@@ -28,7 +31,9 @@ use Symfony\Component\Validator\Constraints\Length;
         new Put(denormalizationContext: ['groups' => ['write:Livre']]), 
         new Delete()
     ]
-)]
+    ),
+ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'nom' => 'partial', 'auteur' => 'partial', 'editeur' => 'partial'])
+]
 class Livre
 {
     #[ORM\Id]
@@ -54,7 +59,7 @@ class Livre
     #[
         Groups(['read:item']), 
         //On oblige l'utilisateur à rentrer 10 carac
-        Length(min:10, max:10)
+        Length(min:10, max:17)
     ]
     #[ORM\Column(length: 255)]
     private ?string $ISBN = null;
@@ -74,7 +79,6 @@ class Livre
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
-    
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Groups(['read:item'])]
     private ?\DateTimeInterface $date = null;
