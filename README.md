@@ -40,3 +40,14 @@
       <li>Régime</li>
     </ul>
 </details>
+
+<details close>
+    <summary>Recherches</summary>
+    <p>Il est possible de rechercher un livre par plusieurs moyens :</p>
+        <ul>
+            <li>Identifiant</li>
+            <li>Nom du livre</li>
+            <li>Nom de l'auteur</li>
+            <li>Nom de l'éditeur</li> 
+        </ul>
+</details>
