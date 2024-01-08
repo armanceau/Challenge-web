@@ -1,6 +1,6 @@
 {
     "require": {
-        "symfony/runtime": "^7.0"
+        "symfony/runtime": "*"
     },
     "config": {
         "allow-plugins": {

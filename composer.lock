@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "540de3a5df1c9b8d53984ccee77aba2f",
+    "content-hash": "240957ba724716bfbaeef1635092e3eb",
     "packages": [
         {
             "name": "symfony/runtime",
