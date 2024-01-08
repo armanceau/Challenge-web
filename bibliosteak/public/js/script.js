@@ -31,21 +31,33 @@ function displayAllBook(){
         var data = JSON.parse(request.responseText);
 
         //Récupérer la div dans l'HTML où l'on va afficher le contenu de l'advice
-        var apiDataElement = document.getElementById('display-book');
+        var displayBookDiv = document.getElementById('display-book');
 
-        //Injection du contenu de l'advice dans la div
-        apiDataElement.textContent = data;
+        // Utiliser forEach pour itérer sur chaque livre et créer une carte pour chaque livre
+        data['hydra:member'].forEach(function (livre) {
+            // Créer un élément de carte pour chaque livre
+            var livreCard = document.createElement('div');
+            livreCard.classList.add('livre-card');
+            livreCard.classList.add('col-md-3');
 
-        const premierLivreInfos = data['hydra:member'][0].nom;
-        console.log("Informations du premier livre :", premierLivreInfos);
+            // Remplacer LIVRE_ID par l'id réel du livre
+
+            // Ajouter le contenu du livre à la carte
+            livreCard.innerHTML =` 
+                <div class="card-livre d-flex flex-column justify-content-center align-items-center">
+                <a class="link-detail-book" href="https://127.0.0.1:8000/livre/detail/${livre.id}">
+                    <h3 class="titre-livre h5">${livre.nom}</h3>
+                    <p class="auteur-livre">Auteur: ${livre.auteur}</p>
+                    <p class="note-livre">Note: ${livre.note}</p>
+                </a>
+                </div>`;
+
+        // Ajouter la carte à la div d'affichage des livres
+        displayBookDiv.appendChild(livreCard);
+
+    });
     }
     request.send();
-
-    document.addEventListener('DOMContentLoaded', function() {
-        displayAllBook();
-    });
-    
-    // document.addEventListener("DOMContentLoaded", displayAllBook);
 }
 
 

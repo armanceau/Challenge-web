@@ -23,4 +23,12 @@ class LivreController extends AbstractController
             'controller_name' => 'LivreController',
         ]);
     }
+
+    #[Route('/livre/detail/{id_livre}', name: 'detail_book')]
+    public function detail(): Response
+    {
+        return $this->render('livre/detail.html.twig', [
+            'controller_name' => 'LivreController',
+        ]);
+    }
 }
