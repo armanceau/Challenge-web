@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rechercher livre{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="bibliosteak\css">
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="bibliosteak\js"></script>
+{% endblock %}
+
+{% block body %}
+<body>
+    <input type="text" id="input-search">
+    <input type="button" value="Submit" onclick="sendRequest()">
+    <div id="test"></div>
+</body>
+
+<script>
+    function sendRequest(){
+    var request = new XMLHttpRequest();
+
+    var city = document.getElementById('input-search').value;
+
+    request.open('GET', 'https://127.0.0.1:8000/api', true);
+
+    request.onload = function(){
+        var data = JSON.parse(request.responseText);
+
+        var test = document.getElementById('test');
+
+        test.textContent = data.id;
+
+        console.log(data);
+    }
+
+request.send();
+}
+</script>
+{% endblock %} 
+

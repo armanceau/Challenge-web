@@ -1,35 +1,39 @@
+{# templates/cuisine/accueil.html.twig #}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Api</title>
+    <title>Bibliothèque de Livres de Cuisine</title>
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 </head>
 <body>
-    <input type="text" id="input-search">
-    <input type="button" value="Submit" onclick="sendRequest()">
-    <div id="test"></div>
+    <header>
+        <div class="header-container">
+            <h1>Bibliothèque de Livres de Cuisine</h1>
+        </div>
+    </header>
 
+    <section class="livres-section">
+        <div class="livre">
+            <img src="https://via.placeholder.com/150" alt="Livre 1">
+            <h2>Titre du Livre 1</h2>
+            <p>Auteur 1</p>
+        </div>
+
+        <div class="livre">
+            <img src="https://via.placeholder.com/150" alt="Livre 2">
+            <h2>Titre du Livre 2</h2>
+            <p>Auteur 2</p>
+        </div>
+
+        <!-- Ajoutez plus de livres de la même manière -->
+
+    </section>
+
+    <footer>
+        <p>&copy; {{ 'now'|date('Y') }} Bibliothèque de Livres de Cuisine</p>
+    </footer>
 </body>
-<script>
-    function sendRequest(){
-    var request = new XMLHttpRequest();
-
-    var city = document.getElementById('input-search').value;
-
-    request.open('GET', 'https://127.0.0.1:8001/api', true);
-
-    request.onload = function(){
-        var data = JSON.parse(request.responseText);
-
-        var test = document.getElementById('test');
-
-        test.textContent = data.id;
-
-        console.log(data);
-    }
-
-request.send();
-}
-</script>
 </html>
