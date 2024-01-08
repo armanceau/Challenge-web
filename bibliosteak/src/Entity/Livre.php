@@ -31,7 +31,7 @@ use Symfony\Component\Validator\Constraints\Length;
         new Put(denormalizationContext: ['groups' => ['write:Livre']]), 
         new Delete()
     ]
-    ),
+),
 ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'nom' => 'partial', 'auteur' => 'partial', 'editeur' => 'partial'])
 ]
 class Livre
