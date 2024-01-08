@@ -2,24 +2,38 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\LivreRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Delete;
+use Symfony\Component\Validator\Constraints\Length;
 
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
 #[ApiResource(
-    normalizationContext: ['groups' => ['read:collection']], 
-    //A supprimer si on veut voir tous les livres pour l'instant, Grafikar.fr Découverte d'API Platform : La sérialisation -> 6.18
-    // On essaie d'afficher que titre auteur et note pour tous les livres mais quand précision d'un lvre on affiche plus comme description
-    //operations: [
-    //    new Get(
-    //        normalizationContext: ['groups' => ['read:collection', 'read:item']], 
-    //    )
-    //]
-)]
+    description: "Un ensemble de rêve culinaire",
+    //On définit le nombre d'élément par page à 2 : (possible de voir le nombre total d'items via la ligne --> "hydra:totalItems": ... )
+    paginationItemsPerPage:2,
+    operations: [
+        //Affiche les livres sans détail (id, auteur, nom, note)
+        new GetCollection(normalizationContext: ['groups' => ['read:collection']]),
+        //Affiche les détails du livre lorsque le livre est sélectionné
+        new Get(normalizationContext: ['groups' => ['read:collection', 'read:item', 'read:Culture', 'read:Regime']]), 
+        new Post(), 
+        //Lors de la modification on choisi de modifier uniquement le nom et la culture on empêche la modification des autres champs
+        new Put(denormalizationContext: ['groups' => ['write:Livre']]), 
+        new Delete()
+    ]
+    ),
+ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'nom' => 'partial', 'auteur' => 'partial', 'editeur' => 'partial'])
+]
 class Livre
 {
     #[ORM\Id]
@@ -28,14 +42,25 @@ class Livre
     #[Groups(['read:collection'])]
     private ?int $id = null;
 
-    #[Groups(['read:collection'])]
+    #[
+        Groups(['read:collection', 'write:Livre']), 
+        Length(min:5)
+    ]
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[Groups(['read:item'])]
+    #[
+        Groups(['read:item', 'write:Livre']),   
+        Length(min:10)
+    ]
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
+    #[
+        Groups(['read:item']), 
+        //On oblige l'utilisateur à rentrer 10 carac
+        Length(min:10, max:17)
+    ]
     #[ORM\Column(length: 255)]
     private ?string $ISBN = null;
 
@@ -43,10 +68,11 @@ class Livre
     #[ORM\Column(length: 255)]
     private ?string $auteur = null;
 
+    #[Groups(['read:item'])]
     #[ORM\Column(length: 255)]
     private ?string $editeur = null;
 
-    #[Groups(['read:collection'])]
+    #[Groups(['read:collection', 'write:Livre'])]
     #[ORM\Column(nullable: true)]
     private ?int $note = null;
 
@@ -54,16 +80,20 @@ class Livre
     private ?string $image = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['read:item'])]
     private ?\DateTimeInterface $date = null;
 
+    #[Groups(['read:item'])]
     #[ORM\Column]
     private ?float $prix = null;
 
     #[ORM\ManyToOne(inversedBy: 'livres')]
-    private ?culture $culture = null;
+    #[Groups(['read:item', 'write:Livre'])]
+    private ?Culture $culture = null;
 
     #[ORM\ManyToOne(inversedBy: 'livres')]
-    private ?regime $regime = null;
+    #[Groups(['read:item', 'write:Livre'])]
+    private ?Regime $regime = null;
 
     public function getId(): ?int
     {
