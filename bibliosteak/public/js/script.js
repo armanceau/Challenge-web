@@ -28,17 +28,19 @@ var request = new XMLHttpRequest();
 
 switch (selected_search.value) {
     case 'titre':
-        // request.open('GET', 'https://127.0.0.1:8000/api/livres?page=1&id=&nom=' + research.value, true);
-        window.location.href = "https://127.0.0.1:8000/api/livres?page=1&id=&nom=" + research.value;
+        var url = apiUrl+"livres?page=1&id=&nom=" + encodeURIComponent(document.getElementById('input-search').value);
+        window.location.href = url;
     break;
     case 'auteur':
-        // request.open('GET', 'https://127.0.0.1:8000/api/livres?page=1&id=&auteur' + research.value, true);
-        window.location.href = "https://127.0.0.1:8000/api/livres?page=1&id=&auteur=" + research.value;
+        var url = apiUrl+"livres?page=1&id=&auteur=" + encodeURIComponent(document.getElementById('input-search').value);
+        window.location.href = url;
     break;
     case 'editeur':
-        // request.open('GET', 'https://127.0.0.1:8000/apilivres?page=1&id=&editeur' + research.value, true);
-        window.location.href = "https://127.0.0.1:8000/api/livres?page=1&id=&editeur=" + research.value;
-    break;
+        var url = apiUrl+"livres?page=1&id=&editeur=" + encodeURIComponent(document.getElementById('input-search').value);
+        window.location.href = url;
+        //test
+        console.log(url);
+        break;
     default:
         request.open('GET', 'https://127.0.0.1:8000/api/livres', true);
         window.location.href = "https://127.0.0.1:8000/livres";
