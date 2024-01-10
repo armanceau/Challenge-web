@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints\Length;
 #[ApiResource(
     description: "Un ensemble de rêve culinaire",
     //On définit le nombre d'élément par page à 2 : (possible de voir le nombre total d'items via la ligne --> "hydra:totalItems": ... )
-    paginationItemsPerPage:2,
+    // paginationItemsPerPage:2,
     operations: [
         //Affiche les livres sans détail (id, auteur, nom, note)
         new GetCollection(normalizationContext: ['groups' => ['read:collection']]),
@@ -76,6 +76,7 @@ class Livre
     #[ORM\Column(nullable: true)]
     private ?int $note = null;
 
+    #[Groups(['read:collection', 'write:Livre'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
