@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\LivreRepository;
 
 class LivreController extends AbstractController
 {
@@ -25,10 +26,11 @@ class LivreController extends AbstractController
     }
 
     #[Route('/livre/detail/{id_livre}', name: 'detail_book')]
-    public function detail(): Response
+    public function index(int $id_livre, LivreRepository $repo): Response
     {
+        $livreSelected = $repo->find($id_livre);
         return $this->render('livre/detail.html.twig', [
-            'controller_name' => 'LivreController',
+            'livreSelected' => $livreSelected,
         ]);
     }
 }
