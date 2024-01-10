@@ -21,3 +21,9 @@
     align-items: center;
     width: 100%;
 }
+
+.couverture-livre{
+    max-width: 150px;
+    height: 200px;
+    margin-bottom: 1rem;
+}

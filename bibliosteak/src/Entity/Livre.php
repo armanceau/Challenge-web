@@ -76,6 +76,7 @@ class Livre
     #[ORM\Column(nullable: true)]
     private ?int $note = null;
 
+    #[Groups(['read:collection', 'write:Livre'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 

@@ -46,6 +46,7 @@ function displayAllBook(){
             livreCard.innerHTML =` 
                 <div class="card-livre d-flex flex-column justify-content-center align-items-center">
                 <a class="link-detail-book" href="https://127.0.0.1:8000/livre/detail/${livre.id}">
+                    <img class="couverture-livre" src="${livre.image}" alt="${livre.nom}-couverture">
                     <h3 class="titre-livre h5">${livre.nom}</h3>
                     <p class="auteur-livre">Auteur: ${livre.auteur}</p>
                     <p class="note-livre">Note: ${livre.note}</p>
