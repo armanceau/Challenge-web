@@ -13,60 +13,33 @@ function handleKeyPress(event) {
     }
 }
 
-var research = document.getElementById('input-search').value;
-var encodedResearch = encodeURIComponent(research);
+var selected_search = document.getElementById('select-search');
+var research = document.getElementById('input-search')
 
 function sendRequest(){
+var request = new XMLHttpRequest();
+
 switch (selected_search.value) {
     case 'titre':
-        var url = "https://127.0.0.1:8000/api/livres?page=1&id=&nom=" + encodeURIComponent(research.value);
-        break;
+        // request.open('GET', 'https://127.0.0.1:8000/api/livres?page=1&id=&nom=' + research.value, true);
+        window.location.href = "https://127.0.0.1:8000/api/livres?page=1&id=&nom=" + research.value;
+    break;
     case 'auteur':
-        var url = "https://127.0.0.1:8000/api/livres?page=1&id=&auteur=" + encodeURIComponent(research.value);
-        break;
+        // request.open('GET', 'https://127.0.0.1:8000/api/livres?page=1&id=&auteur' + research.value, true);
+        window.location.href = "https://127.0.0.1:8000/api/livres?page=1&id=&auteur=" + research.value;
+    break;
     case 'editeur':
-        var url = "https://127.0.0.1:8000/api/livres?page=1&id=&editeur=" + encodeURIComponent(research.value);
-        break;
+        // request.open('GET', 'https://127.0.0.1:8000/apilivres?page=1&id=&editeur' + research.value, true);
+        window.location.href = "https://127.0.0.1:8000/api/livres?page=1&id=&editeur=" + research.value;
+    break;
     default:
-        var url = "https://127.0.0.1:8000/livres";
-        break;
-}
-
-
-var request = new XMLHttpRequest();
-request.open('GET', url, true);
-
-request.onload = function () {
-    if (request.status >= 200 && request.status < 400) {
-        // Succès de la requête, traitement des données JSON
-        var data = JSON.parse(request.responseText);
-        displayResults(data);
-    } else {
-        // Gestion des erreurs
-        console.error("La requête a échoué avec le statut :", request.status);
-    }
-};
-
-request.onerror = function () {
-    console.error("Erreur réseau");
-};
+        request.open('GET', 'https://127.0.0.1:8000/api/livres', true);
+        window.location.href = "https://127.0.0.1:8000/livres";
+    break;
+  }
 
 request.send();
 }
-
-function displayResults(data) {
-    var resultsDiv = document.getElementById('results');
-
-    // Manipulez le DOM pour afficher les résultats comme vous le souhaitez
-    // Par exemple, créez des éléments HTML pour chaque livre et ajoutez-les à resultsDiv
-    for (var i = 0; i < data.length; i++) {
-        var bookDiv = document.createElement('div');
-        bookDiv.innerHTML = '<h2>' + data[i].titre + '</h2><p>Auteur : ' + data[i].auteur + '</p>';
-        resultsDiv.appendChild(bookDiv);
-    }
-}
-
-
 
 function displayAllBook(){
 

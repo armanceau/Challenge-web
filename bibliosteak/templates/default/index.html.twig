@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="{{ asset('css/home.css') }}">
         <link rel="stylesheet" href="{{ asset('css/livres.css') }}">
         <link rel="stylesheet" href="{{ asset('css/recherche.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     </head>
     {% block navbar %}
     <!-- Responsive navbar-->
@@ -24,6 +25,12 @@
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ path('app_default')}}">Accueil</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ path('recherche_livre')}}">Recherche</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ path('afficher_livres')}}">Nos livres</a></li>
+                    {# Vérifier si l'utilisateur est connecté #} 
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} {# L'utilisateur est connecté, afficher le bouton "Log out" #}
+                    <li><a class="dropdown-item nav-link" href="{{ path('app_logout')}}">Log out</a></li>
+                    {% else %} {# L'utilisateur n'est pas connecté, afficher le bouton"Log in" #}
+                    <li><a class="dropdown-item nav-link" href="{{ path('app_login')}}">Log in</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
