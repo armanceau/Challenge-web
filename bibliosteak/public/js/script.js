@@ -1,24 +1,67 @@
-
 function handleKeyPress(event) {
     console.log('handleKeyPress')
     if (event.key === 'Enter') {
-        sendRequest();
+        
+        if (selected_search.value){
+            sendRequest();
+        }else{
+            alert('vous devez choisir un critère de recheche')
+        }
     }
 }
 
-function sendRequest(){
-var request = new XMLHttpRequest();
+var selected_search = document.getElementById('select-search');
+var research = document.getElementById('input-search');
 
-request.open('GET', 'https://127.0.0.1:8000/api', true);
+function sendRequest() {
+    var request = new XMLHttpRequest();
 
-request.onload = function(){
-    var data = JSON.parse(request.responseText);
+    switch (selected_search.value) {
+        case 'titre':
+            window.location.href = "https://127.0.0.1:8000/api/livres?page=1&id=&nom=" + encodeURIComponent(research.value);
+            break;
+        case 'auteur':
+            window.location.href = "https://127.0.0.1:8000/api/livres?page=1&id=&auteur=" + encodeURIComponent(research.value);
+            break;
+        case 'editeur':
+            window.location.href = "https://127.0.0.1:8000/api/livres?page=1&id=&editeur=" + encodeURIComponent(research.value);
+            break;
+        default:
+            window.location.href = "https://127.0.0.1:8000/livres";
+            break;
+    }
 
-    console.log(data);
+    request.onload = function () {
+        if (request.status >= 200 && request.status < 400) {
+            // Succès de la requête, traitement des données JSON
+            var data = JSON.parse(request.responseText);
+            displayResults(data);
+        } else {
+            // Gestion des erreurs
+            console.error("La requête a échoué avec le statut :", request.status);
+        }
+    };
+
+    request.onerror = function () {
+        console.error("Erreur réseau");
+    };
+
+    request.send();
 }
 
-request.send();
+function displayResults(data) {
+    // Manipulez le DOM pour afficher les résultats comme vous le souhaitez
+    // Par exemple, créez des éléments HTML pour chaque livre et ajoutez-les à la page
+    var resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = ""; // Clear previous results
+
+    for (var i = 0; i < data.length; i++) {
+        var bookDiv = document.createElement('div');
+        bookDiv.innerHTML = '<h2>' + data[i].title + '</h2><p>Auteur : ' + data[i].author + '</p>';
+        resultsDiv.appendChild(bookDiv);
+    }
 }
+
 
 function displayAllBook(){
 

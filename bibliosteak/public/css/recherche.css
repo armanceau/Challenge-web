@@ -835,7 +835,12 @@ legend {
   color: #fff;
   font-weight: 800;
   text-align: center;
-  margin-bottom: 59px;
+  margin-bottom: 40px;
+}
+
+.select-search{
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 .s006 section .inner-form {
