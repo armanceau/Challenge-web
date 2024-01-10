@@ -19,13 +19,8 @@ function handleKeyPress(event) {
     }
 }
 
-<<<<<<< HEAD
 var selected_search = document.getElementById('select-search');
 var research = document.getElementById('input-search')
-=======
-var research = "";
-var encodedResearch = encodeURIComponent(research);
->>>>>>> arthur
 
 console.log(apiUrl);
 function sendRequest(){
@@ -33,7 +28,6 @@ var request = new XMLHttpRequest();
 
 switch (selected_search.value) {
     case 'titre':
-<<<<<<< HEAD
         // request.open('GET', 'https://127.0.0.1:8000/api/livres?page=1&id=&nom=' + research.value, true);
         window.location.href = "https://127.0.0.1:8000/api/livres?page=1&id=&nom=" + research.value;
     break;
@@ -50,69 +44,10 @@ switch (selected_search.value) {
         window.location.href = "https://127.0.0.1:8000/livres";
     break;
   }
-=======
-        console.log(research.value);
-        var url = apiUrl+"livres?page=1&id=&nom="+encodeURIComponent(document.getElementById('input-search').value);
-        window.location.href = url;
-        break;
-    case 'auteur':
-        var url = apiUrl+"livres?page=1&id=&auteur=" + encodeURIComponent(document.getElementById('input-search').value);
-        window.location.href = url;
-        break;
-    case 'editeur':
-        var url = apiUrl+"livres?page=1&id=&editeur=" + encodeURIComponent(document.getElementById('input-search').value);
-        window.location.href = url;
-        console.log(url);
-        break;
-    default:
-        var url = apiUrl+"livres";
-        window.location.href = url;
-        break;
-}
-
-
-var request = new XMLHttpRequest();
-request.open('GET', url, true);
-
-request.onload = function () {
-    if (request.status >= 200 && request.status < 400) {
-        // Succès de la requête, traitement des données JSON
-        var data = JSON.parse(request.responseText);
-        displayResults(data);
-    } else {
-        // Gestion des erreurs
-        console.error("La requête a échoué avec le statut :", request.status);
-    }
-};
-
-request.onerror = function () {
-    console.error("Erreur réseau");
-};
->>>>>>> arthur
 
 request.send();
 }
 
-<<<<<<< HEAD
-=======
-function displayResults(data) {
-    var resultsDiv = document.getElementById('results');
-
-    // Manipulez le DOM pour afficher les résultats comme vous le souhaitez
-    // Par exemple, créez des éléments HTML pour chaque livre et ajoutez-les à resultsDiv
-    for (var i = 0; i < data.length; i++) {
-        var bookDiv = document.createElement('div');
-        bookDiv.innerHTML = '<h2>' + data[i].titre + '</h2><p>Auteur : ' + data[i].auteur + '</p>';
-        resultsDiv.appendChild(bookDiv);
-    }
-}
-
-
-
-// Construire l'URL pour la requête AJAX
-
-
->>>>>>> arthur
 function displayAllBook(){
 
     var request = new XMLHttpRequest();
