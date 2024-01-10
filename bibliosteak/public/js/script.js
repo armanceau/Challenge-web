@@ -28,15 +28,15 @@ var request = new XMLHttpRequest();
 
 switch (selected_search.value) {
     case 'titre':
-        var url = apiUrl+"livres?page=1&id=&nom=" + encodeURIComponent(document.getElementById('input-search').value);
+        var url = apiUrl+"livres?page=1&id=&nom=" + encodeURIComponent(research.value);
         window.location.href = url;
     break;
     case 'auteur':
-        var url = apiUrl+"livres?page=1&id=&auteur=" + encodeURIComponent(document.getElementById('input-search').value);
+        var url = apiUrl+"livres?page=1&id=&auteur=" + encodeURIComponent(research.value);
         window.location.href = url;
     break;
     case 'editeur':
-        var url = apiUrl+"livres?page=1&id=&editeur=" + encodeURIComponent(document.getElementById('input-search').value);
+        var url = apiUrl+"livres?page=1&id=&editeur=" + encodeURIComponent(research.value);
         window.location.href = url;
         //test
         console.log(url);
