@@ -16,34 +16,20 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Delete;
 use App\Controller\MeController;
+use App\Controller\SecurityController;
+
 use Symfony\Component\Security\Core\Security;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource(
-    // CollectionOperations: [
-    //     'me' => [
-    //         'pagination_enable' => false,
-    //         'path' => '/me',
-    //         'method' => 'get',
-    //         'controller' => MeController::class,
-    //         'read' => false
-    //     ]
-    // ],
-    // itemOperations: [
-    //     'get' => [
-    //         'controller' => NotFoundAction::class, 
-    //         'openapi_context' => ['summary' => 'hidden'],
-    //         'read' => false,
-    //         'output' => false
-    //     ]
-    //     ],
+    security: "is_granted('ROLE_USER')",
     operations: [
         new Get (
             name: 'me',
             uriTemplate: '/me',
             controller: MeController::class,
             read: false,
-            security: 'is_granted("ROLE_USER")'
+            openapiContext: ['security' => ['cookieAuth' => []]]
         ),
         new Get(
             controller: NotFoundAction::class,
@@ -52,6 +38,7 @@ use Symfony\Component\Security\Core\Security;
             output: false,
             normalizationContext: ['groups' => ['read:User']]
         ), 
+        new Post()
     ]
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
