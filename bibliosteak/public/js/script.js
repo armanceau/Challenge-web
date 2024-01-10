@@ -1,3 +1,9 @@
+var currentUrl = window.location.href;
+
+var apiUrl1 = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port;
+console.log(apiUrl1);
+
+var apiUrl = currentUrl.replace(/\/[^\/]*$/, '') + '/api/';
 
 var selected_search = document.getElementById('select-search');
 
@@ -13,22 +19,29 @@ function handleKeyPress(event) {
     }
 }
 
-var research = document.getElementById('input-search').value;
+var research = "";
 var encodedResearch = encodeURIComponent(research);
 
+console.log(apiUrl);
 function sendRequest(){
 switch (selected_search.value) {
     case 'titre':
-        var url = "https://127.0.0.1:8000/api/livres?page=1&id=&nom=" + encodeURIComponent(research.value);
+        console.log(research.value);
+        var url = apiUrl+"livres?page=1&id=&nom="+encodeURIComponent(document.getElementById('input-search').value);
+        window.location.href = url;
         break;
     case 'auteur':
-        var url = "https://127.0.0.1:8000/api/livres?page=1&id=&auteur=" + encodeURIComponent(research.value);
+        var url = apiUrl+"livres?page=1&id=&auteur=" + encodeURIComponent(document.getElementById('input-search').value);
+        window.location.href = url;
         break;
     case 'editeur':
-        var url = "https://127.0.0.1:8000/api/livres?page=1&id=&editeur=" + encodeURIComponent(research.value);
+        var url = apiUrl+"livres?page=1&id=&editeur=" + encodeURIComponent(document.getElementById('input-search').value);
+        window.location.href = url;
+        console.log(url);
         break;
     default:
-        var url = "https://127.0.0.1:8000/livres";
+        var url = apiUrl+"livres";
+        window.location.href = url;
         break;
 }
 
@@ -68,11 +81,14 @@ function displayResults(data) {
 
 
 
+// Construire l'URL pour la requête AJAX
+
+
 function displayAllBook(){
 
     var request = new XMLHttpRequest();
     
-    request.open('GET', 'https://127.0.0.1:8000/api/livres', true);
+    request.open('GET', apiUrl+"livres", true);
     
     request.onload = function() {
 
@@ -93,7 +109,7 @@ function displayAllBook(){
             // Ajouter le contenu du livre à la carte
             livreCard.innerHTML =` 
                 <div class="card-livre d-flex flex-column justify-content-center align-items-center">
-                <a class="link-detail-book" href="https://127.0.0.1:8000/livre/detail/${livre.id}">
+                <a class="link-detail-book" href="${apiUrl1}/livre/detail/${livre.id}">
                     <img class="couverture-livre" src="${livre.image}" alt="${livre.nom}-couverture">
                     <h3 class="titre-livre h5">${livre.nom}</h3>
                     <p class="auteur-livre">Auteur: ${livre.auteur}</p>
