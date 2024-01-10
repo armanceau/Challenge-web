@@ -37,6 +37,7 @@ switch (selected_search.value) {
     case 'editeur':
         var url = apiUrl+"livres?page=1&id=&editeur=" + encodeURIComponent(document.getElementById('input-search').value);
         window.location.href = url;
+        //test
         console.log(url);
         break;
     default:
