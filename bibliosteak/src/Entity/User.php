@@ -24,13 +24,13 @@ use Symfony\Component\Security\Core\Security;
 #[ApiResource(
     security: "is_granted('ROLE_USER')",
     operations: [
-        new Get (
-            name: 'me',
-            uriTemplate: '/me',
-            controller: MeController::class,
-            read: false,
-            openapiContext: ['security' => ['cookieAuth' => []]]
-        ),
+        // new Get (
+        //     name: 'me',
+        //     uriTemplate: '/me',
+        //     controller: MeController::class,
+        //     read: false,
+        //     openapiContext: ['security' => ['cookieAuth' => []]]
+        // ),
         new Get(
             controller: NotFoundAction::class,
             openapiContext: ['summary' => 'hidden'],
@@ -38,7 +38,8 @@ use Symfony\Component\Security\Core\Security;
             output: false,
             normalizationContext: ['groups' => ['read:User']]
         ), 
-        new Post()
+        new Post(
+        )
     ]
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -119,7 +120,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setPassword(string $password): static
     {
-        $this->password = $password;
+        // Hash the password before storing it
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $this->password = $hashedPassword;
 
         return $this;
     }
