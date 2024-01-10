@@ -1,3 +1,6 @@
+
+var selected_search = document.getElementById('select-search');
+
 function handleKeyPress(event) {
     console.log('handleKeyPress')
     if (event.key === 'Enter') {
@@ -10,57 +13,59 @@ function handleKeyPress(event) {
     }
 }
 
-var selected_search = document.getElementById('select-search');
-var research = document.getElementById('input-search');
+var research = document.getElementById('input-search').value;
+var encodedResearch = encodeURIComponent(research);
 
-function sendRequest() {
-    var request = new XMLHttpRequest();
+function sendRequest(){
+switch (selected_search.value) {
+    case 'titre':
+        var url = "https://127.0.0.1:8000/api/livres?page=1&id=&nom=" + encodeURIComponent(research.value);
+        break;
+    case 'auteur':
+        var url = "https://127.0.0.1:8000/api/livres?page=1&id=&auteur=" + encodeURIComponent(research.value);
+        break;
+    case 'editeur':
+        var url = "https://127.0.0.1:8000/api/livres?page=1&id=&editeur=" + encodeURIComponent(research.value);
+        break;
+    default:
+        var url = "https://127.0.0.1:8000/livres";
+        break;
+}
 
-    switch (selected_search.value) {
-        case 'titre':
-            window.location.href = "https://127.0.0.1:8000/api/livres?page=1&id=&nom=" + encodeURIComponent(research.value);
-            break;
-        case 'auteur':
-            window.location.href = "https://127.0.0.1:8000/api/livres?page=1&id=&auteur=" + encodeURIComponent(research.value);
-            break;
-        case 'editeur':
-            window.location.href = "https://127.0.0.1:8000/api/livres?page=1&id=&editeur=" + encodeURIComponent(research.value);
-            break;
-        default:
-            window.location.href = "https://127.0.0.1:8000/livres";
-            break;
+
+var request = new XMLHttpRequest();
+request.open('GET', url, true);
+
+request.onload = function () {
+    if (request.status >= 200 && request.status < 400) {
+        // Succès de la requête, traitement des données JSON
+        var data = JSON.parse(request.responseText);
+        displayResults(data);
+    } else {
+        // Gestion des erreurs
+        console.error("La requête a échoué avec le statut :", request.status);
     }
+};
 
-    request.onload = function () {
-        if (request.status >= 200 && request.status < 400) {
-            // Succès de la requête, traitement des données JSON
-            var data = JSON.parse(request.responseText);
-            displayResults(data);
-        } else {
-            // Gestion des erreurs
-            console.error("La requête a échoué avec le statut :", request.status);
-        }
-    };
+request.onerror = function () {
+    console.error("Erreur réseau");
+};
 
-    request.onerror = function () {
-        console.error("Erreur réseau");
-    };
-
-    request.send();
+request.send();
 }
 
 function displayResults(data) {
-    // Manipulez le DOM pour afficher les résultats comme vous le souhaitez
-    // Par exemple, créez des éléments HTML pour chaque livre et ajoutez-les à la page
     var resultsDiv = document.getElementById('results');
-    resultsDiv.innerHTML = ""; // Clear previous results
 
+    // Manipulez le DOM pour afficher les résultats comme vous le souhaitez
+    // Par exemple, créez des éléments HTML pour chaque livre et ajoutez-les à resultsDiv
     for (var i = 0; i < data.length; i++) {
         var bookDiv = document.createElement('div');
-        bookDiv.innerHTML = '<h2>' + data[i].title + '</h2><p>Auteur : ' + data[i].author + '</p>';
+        bookDiv.innerHTML = '<h2>' + data[i].titre + '</h2><p>Auteur : ' + data[i].auteur + '</p>';
         resultsDiv.appendChild(bookDiv);
     }
 }
+
 
 
 function displayAllBook(){
@@ -103,6 +108,3 @@ function displayAllBook(){
     }
     request.send();
 }
-
-
-// window.location.href = "https://www.example.com/nouvelle-page";
