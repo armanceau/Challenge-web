@@ -4,12 +4,6 @@
 
 
 {% block body %}
-<<<<<<< HEAD
-<form id="form-login" method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-=======
 <style>
     .line{
         height: 48vh;
@@ -41,7 +35,6 @@
                 {% if error %}
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
->>>>>>> arthur
 
                 {% if app.user %}
                     <div class="mb-3">
