@@ -89,3 +89,15 @@ function displayAllBook(){
     }
     request.send();
 }
+
+function quicksearch(span){
+    
+    var quicksearch = span.getAttribute("value");
+
+    var request = new XMLHttpRequest();
+    var apiUrl = apiUrl1+'/api/livres?search=' + quicksearch ;
+
+    window.location.href = apiUrl
+   
+    request.send();
+}
