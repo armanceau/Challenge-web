@@ -4,10 +4,10 @@
 
 {% block body %}
 
-<section class="py-5">
+<section class="">
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ livreSelected.image }}" alt="..." /></div>
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" style="width: 60%;" src="{{ livreSelected.image }}" alt="couverture livre" /></div>
             <div class="col-md-6">
                 <div class="small mb-1"> ISBN : {{ livreSelected.isbn }}</div>
                 <div class="small mb-1">Paru le : {{ livreSelected.date |date('d-m-Y') }}</div>
@@ -17,8 +17,20 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-currency-euro" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17.2 7a6 7 0 1 0 0 10" /><path d="M13 10h-8m0 4h8" /></svg>
                 </div>
                 <div class="fs-5 mb-5" style="display: flex;align-items: center;gap: 0.5rem;">
-                    <span>Avis lecteur : {{ livreSelected.note }}</span> 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-star-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" stroke-width="0" fill="yellow" /></svg>
+                    <span>Avis lecteur :</span> 
+                    {% set maxStars = 5 %}
+
+                    {% set fullStars = livreSelected.note|default(0) %}
+                    {% set emptyStars = maxStars - fullStars %}
+
+                    {% for _ in 1..fullStars %}
+                        <i class="bi bi-star-fill text-warning"></i>
+                    {% endfor %}
+
+                    {# Afficher les étoiles vides #}
+                    {% for _ in 1..emptyStars %}
+                        <i class="bi bi-star"></i>
+                    {% endfor %}
                 </div>
                 <p class="lead" style="margin-bottom: 3rem;">{{livreSelected.description}}</p>
                 <p class="lead" style="margin-bottom: 3rem;"> Écrit par <b>{{livreSelected.auteur}}</b> aux <b>{{livreSelected.editeur}}</b></p>
@@ -33,4 +45,7 @@
     </div>
 </section>
 
+{% endblock %}
+
+{% block footer %}
 {% endblock %}
