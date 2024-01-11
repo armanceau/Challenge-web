@@ -105,7 +105,6 @@ function displayAllBook(){
                 return starRatingHTML;
             }
 
-
         // Ajouter la carte à la div d'affichage des livres
         displayBookDiv.appendChild(livreCard);
 
