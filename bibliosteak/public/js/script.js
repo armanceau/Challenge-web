@@ -10,12 +10,12 @@ var selected_search = document.getElementById('select-search');
 function handleKeyPress(event) {
     console.log('handleKeyPress')
     if (event.key === 'Enter') {
-        
-        if (selected_search.value){
-            sendRequest();
-        }else{
-            alert('vous devez choisir un critère de recheche')
-        }
+        sendRequest();
+        // if (selected_search.value){
+        //     sendRequest();
+        // }else{
+        //     alert('vous devez choisir un critère de recheche')
+        // }
     }
 }
 
@@ -25,28 +25,10 @@ var research = document.getElementById('input-search')
 // console.log(apiUrl);
 
 function sendRequest(){
-    var request = new XMLHttpRequest();
+var request = new XMLHttpRequest();
+var apiUrl = apiUrl1+'/api/livres?search=' + research.value ;
 
-    switch (selected_search.value) {
-        case 'titre':
-            var url = apiUrl+"livres?page=1&id=&nom=" + encodeURIComponent(document.getElementById('input-search').value);
-            window.location.href = url;
-        break;
-        case 'auteur':
-            var url = apiUrl+"livres?page=1&id=&auteur=" + encodeURIComponent(document.getElementById('input-search').value);
-            window.location.href = url;
-        break;
-        case 'editeur':
-            var url = apiUrl+"livres?page=1&id=&editeur=" + encodeURIComponent(document.getElementById('input-search').value);
-            window.location.href = url;
-            //test
-            console.log(url);
-            break;
-        default:
-            request.open('GET', apiUrl1+'/api/livres', true);
-            window.location.href = apiUrl1+"/livres";
-        break;
-    }
+window.location.href = apiUrl
 
     request.send();
 }

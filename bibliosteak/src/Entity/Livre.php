@@ -15,6 +15,7 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Delete;
 use Symfony\Component\Validator\Constraints\Length;
+use App\Filter\CustomAndFilter;
 
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
 #[ApiResource(
@@ -32,8 +33,9 @@ use Symfony\Component\Validator\Constraints\Length;
         new Delete()
     ]
 ),
-ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'nom' => 'partial', 'auteur' => 'partial', 'editeur' => 'partial'])
 ]
+
+#[ApiFilter(CustomAndFilter::class, properties: ["nom" => "partial", "auteur" => "partial", "editeur" => "partial"])]
 class Livre
 {
     #[ORM\Id]
