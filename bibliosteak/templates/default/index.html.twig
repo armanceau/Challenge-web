@@ -7,7 +7,7 @@
         <meta name="author" content="" />
         <title>{% block title %}Bienvenue - BiblioSteak{% endblock %}</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <link rel="icon" type="image/jpg" href="{{ absolute_url(asset('img/icon.png')) }}"/>
         <!-- Core theme CSS (includes Bootstrap)-->
         <link rel="stylesheet" href="{{ asset('css/home.css') }}">
         <link rel="stylesheet" href="{{ asset('css/livres.css') }}">
@@ -43,13 +43,16 @@
             <!-- Header - set the background image for the header in the line below-->
             <header class="py-5 bg-image-full" style="background-image: url('https://i.pinimg.com/originals/d3/6d/46/d36d462db827833805497d9ea78a1343.jpg')">
                 <div class="text-center my-5">
-                    <img class="img-fluid rounded-circle mb-4" style="max-width: 150px;" src="https://media.licdn.com/dms/image/C4E03AQGG391Q9eJ2RA/profile-displayphoto-shrink_400_400/0/1517525346590?e=1710374400&v=beta&t=2KdL9IQNLgUOeK-VQnV5EGkfZ9j87Pqjy6x9S2soLZE" alt="..." />
-                    <h1 class="text-white fs-3 fw-bolder">Bienvenue chez BiblioSteak !</h1>
-                    <p class="text-white-50 mb-0">La plus vaste bibliothéque numérique de livre de cuisine !!</p>
+                    <img class="img-fluid rounded-circle mb-4" style="max-width: 150px;" src="{{ asset('img/icon.png') }}" />
+                    <h1 class="text-dark fs-3 fw-bolder">Bienvenue chez BiblioSteak !</h1>
+                    <p class="text-dark-50 mb-0">La plus vaste bibliothéque numérique de livre de cuisine ! 🍕🥪</p>
                 </div>
                 <div class="container-recherche">
                     <button id="button-search">
-                        <a href="{{ path('recherche_livre')}}">Effectuer une recherche</a>
+                        <a class="btn btn-outline-dark" href="{{ path('recherche_livre')}}">          
+                            <i class="bi bi-search me-1"></i>
+                            Rechercher
+                        </a>
                     </button>
                 </div>
             </header>
