@@ -9,12 +9,6 @@
         <fieldset>
           <legend>Qu'est-ce que vous recherchez?</legend>
           <div class="select-search">
-            <select name="choose-search-subjet" id="select-search" required>
-              <option value="">--choissisez le critère de recherche--</option>
-                <option value="titre">titre</option>
-                <option value="auteur">auteur</option>
-                <option value="editeur">editeur</option>
-            </select>
           </div>
           <div class="inner-form">
             <div class="input-field">
@@ -40,4 +34,5 @@
 {% endblock %} 
 
 {% block footer %}
+  <script src="{{ asset('js/script.js') }}"></script>
 {% endblock %}

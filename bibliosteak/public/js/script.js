@@ -1,7 +1,7 @@
 var currentUrl = window.location.href;
 
 var apiUrl1 = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port;
-// console.log(apiUrl1);
+console.log(apiUrl1);
 
 var apiUrl = currentUrl.replace(/\/[^\/]*$/, '') + '/api/';
 
@@ -11,11 +11,6 @@ function handleKeyPress(event) {
     console.log('handleKeyPress')
     if (event.key === 'Enter') {
         sendRequest();
-        // if (selected_search.value){
-        //     sendRequest();
-        // }else{
-        //     alert('vous devez choisir un critère de recheche')
-        // }
     }
 }
 
