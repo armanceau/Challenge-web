@@ -1,15 +1,16 @@
-{% extends 'default/index.html.twig' %}
-
-{% block title %}livres - BiblioSteak{% endblock %}
+{% extends 'default/index.html.twig' %} 
+{% block title %}livres - BiblioSteak{%endblock %} 
 
 {% block body %}
-    <!-- cette div contient la liste des livres affiché en Javascript "bibliosteak\public\js\script.js"-->
-    <div id="display-book" class="d-flex justify-content-center align-items-center gap-3">
-    </div>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        displayAllBook();
-    });
-    </script>
+<!-- cette div contient la liste des livres affiché en Javascript "bibliosteak\public\js\script.js"-->
+<div
+  id="display-book"
+  class="d-flex justify-content-center align-items-center gap-3"
+></div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    displayAllBook();
+  });
+</script>
 {% endblock %}

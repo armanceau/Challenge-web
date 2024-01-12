@@ -1,13 +1,11 @@
-{% extends 'default/index.html.twig' %}
+{% extends 'default/index.html.twig' %} {% block body %}
 
-{% block body %}
+<div id="results"></div>
 
-    <div id="results"></div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        displayResults();
-    });
-    </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    displayResults();
+  });
+</script>
 
 {% endblock %}
