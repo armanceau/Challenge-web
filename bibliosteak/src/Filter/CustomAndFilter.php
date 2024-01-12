@@ -13,21 +13,28 @@ class CustomAndFilter extends AbstractFilter
     protected function filterProperty(string $property, $value, QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, Operation $operation = null, array $context = []): void
     {
         $rootAlias = $queryBuilder->getRootAliases()[0];
+
+        // Propriétés dans lesquelles effectuer la recherche
         $propertiesToSearch = ['nom', 'auteur', 'editeur'];
 
         if ($property !== 'search') {
             return;
         }
 
+        // Construisez une condition OR pour chaque propriété à rechercher
         $orX = $queryBuilder->expr()->orX();
 
         foreach ($propertiesToSearch as $prop) {
             if (!$this->isPropertyEnabled($prop, $resourceClass) || !$this->isPropertyMapped($prop, $resourceClass)) {
                 return;
             }
-
+            // Générez un nom de paramètre unique pour chaque propriété
             $parameterName = $queryNameGenerator->generateParameterName($prop);
+
+            // Ajoutez une condition LIKE pour chaque propriété
             $orX->add($queryBuilder->expr()->like(sprintf('%s.%s', $rootAlias, $prop), ':' . $parameterName));
+
+            // Définissez le paramètre avec le terme de recherche
             $queryBuilder->setParameter($parameterName, "%" . $value . "%");
         }
 
