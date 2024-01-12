@@ -1,0 +1,51 @@
+{% extends 'default/index.html.twig' %}
+
+{% block title %} {{ livreSelected.nom }} - BiblioSteak {% endblock %}
+
+{% block body %}
+
+<section class="detail-section">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" style="width: 70%;" src="{{ livreSelected.image }}" alt="couverture livre" /></div>
+            <div class="col-md-6">
+                <div class="small mb-1"> ISBN : {{ livreSelected.isbn }}</div>
+                <div class="small mb-1">Paru le : {{ livreSelected.date |date('d-m-Y') }}</div>
+                <h1 class="display-5 fw-bolder">{{ livreSelected.nom }}</h1>
+                <div class="fs-5 mb-5" style="display: flex;align-items: center;gap: 0.5rem;">
+                    <span>{{ livreSelected.prix }}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-currency-euro" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17.2 7a6 7 0 1 0 0 10" /><path d="M13 10h-8m0 4h8" /></svg>
+                </div>
+                <div class="fs-5 mb-5" style="display: flex;align-items: center;gap: 0.5rem;">
+                    <span>Avis lecteur :</span> 
+                    {% set maxStars = 5 %}
+
+                    {% set fullStars = livreSelected.note|default(0) %}
+                    {% set emptyStars = maxStars - fullStars %}
+
+                    {% for _ in 1..fullStars %}
+                        <i class="bi bi-star-fill text-warning"></i>
+                    {% endfor %}
+
+                    {# Afficher les étoiles vides #}
+                    {% for _ in 1..emptyStars %}
+                        <i class="bi bi-star"></i>
+                    {% endfor %}
+                </div>
+                <p class="lead" style="margin-bottom: 3rem;">{{livreSelected.description}}</p>
+                <p class="lead" style="margin-bottom: 3rem;"> Écrit par <b>{{livreSelected.auteur}}</b> aux <b>{{livreSelected.editeur}}</b></p>
+                <div class="d-flex">
+                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                        <i class="bi-cart-fill me-1"></i>
+                        Ajouter à ma liste
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
